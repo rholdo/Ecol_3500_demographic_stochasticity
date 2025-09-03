@@ -3,13 +3,13 @@ library(ggplot2)
 
 sim <- function(N0, Sigma){
   Y <- 50 # Number of years the model will run
-  K <- 100
+  K <- 50
   # Make a vector for the state variable
   N <- numeric(Y)
   # Define parameter values
   N[1] <- N0 # Initial population size
   for (t in 1:(Y - 1)){
-    r <- rnorm(1,0.2,Sigma)
+    r <- rnorm(1,0.15,Sigma)
     N[t + 1] <- ifelse(N[t] == 0, 0, 
                        round(N[t] + N[t] * r * (1 - N[t] / K)))
     N[t + 1] <- ifelse(N[t + 1] < 0, 0, N[t + 1])
@@ -48,7 +48,7 @@ server <- function(input, output) {
         geom_line(aes(x=Time, y=N)) +
         labs(x = 'Time', 
              y = 'N') +
-        ylim(0,105) +
+        ylim(0,55) +
         theme_bw() +
         theme(panel.grid.major = element_blank(),
               panel.grid.minor = element_blank(),
